@@ -54,8 +54,8 @@ impl State {
                 session: Session::Work,
                 command: Command::None,
                 child_process: None,
-                rest_secs: 300,
-                work_secs: 2700,
+                rest_secs: 3,
+                work_secs: 3,
                 work_color: egui::Color32::RED,
                 rest_color: egui::Color32::GREEN,
             },
@@ -139,7 +139,7 @@ impl eframe::App for State {
             });
         });
         //println!("{}", ctx.viewport_rect().max);
-        // NOTE if device suspended, self.data.instant.elapsed().as_secs() will get
+        // if device suspended, self.data.instant.elapsed().as_secs() will get
         // more then 1
         if self.data.instant.elapsed().as_secs() > 1 {
             self.data.pause = true;
@@ -153,7 +153,10 @@ impl eframe::App for State {
 /*
 
  TODO
- - show how much left to finish current session
+ - sometimes when i finshed the 45 mins it will not add 15 mins, i think this happen when i pause and repause
+ - don't show totals, make remaining underneath the big timer so only three things will get displayed
+ - after timer finished, reset the timer, if no it will be 0, and the user
+ after that can spam play to spawn sounds multiple times
  - i want to press a key that allows to fast finishing the timer
  - for my app, just pkg with a directory that have sounds directory on it just it
  - fix path issue when running with dmenue
@@ -168,9 +171,10 @@ impl eframe::App for State {
   rest session)
  - when the sound finished, make the buttom to disapear
  NOTE (bugs)
- - sometimes the timer will freeze for one second or even more then that
+ - sometimes the timer will freeze for one second or even
  - the program you are building is for you after all, the features you will add
  is based on your needs
- - if you exit the app with the midia player being played it will hid the cursor
+ - if you exit the app with the midia player being played it will hide the cursor
+ when running on the terminal
     - `reset` to make cursor appear again
 */
