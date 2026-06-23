@@ -8,21 +8,27 @@ pub struct WorkCell {
     mins: u64,
     hours: u64,
 }
+
 impl WorkCell {
-    fn update_time(&mut self) {
+    pub fn update_time(&mut self, data: &mut Data) {
         self.mins = self.secs / 60;
         self.hours = self.secs / (60 * 60);
-    }
-    pub fn display(&mut self, ui: &mut Ui, data: &mut Data) {
-        self.update_time();
+
         if data.reset_totals == true {
             self.secs = 0;
         }
-        if data.pause == false {
+
+        //dbg!(&data.pause);
+        if !data.pause {
             if let Session::Work = data.session {
                 self.secs += data.instant.elapsed().as_secs();
             }
         }
+    }
+
+    pub fn display(&mut self, ui: &mut Ui, data: &mut Data) {
+        self.update_time(data);
+
         let degital_clock = format!(
             "Total work: {:02}:{:02}:{:02}",
             self.hours % 24,

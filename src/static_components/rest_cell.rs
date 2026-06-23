@@ -6,21 +6,23 @@ pub struct RestCell {
     mins: u64,
     hours: u64,
 }
+
 impl RestCell {
-    fn update_time(&mut self) {
+    pub fn update_time(&mut self, data: &mut Data) {
         self.mins = self.secs / 60;
         self.hours = self.secs / (60 * 60);
-    }
-    pub fn display(&mut self, ui: &mut egui::Ui, data: &mut Data) {
-        self.update_time();
         if data.reset_totals == true {
             self.secs = 0;
         }
-        if data.pause == false {
+        if !data.pause {
             if let Session::Rest = data.session {
                 self.secs += data.instant.elapsed().as_secs();
             }
         }
+    }
+
+    pub fn display(&mut self, ui: &mut egui::Ui, data: &mut Data) {
+        self.update_time(data);
 
         let degital_clock = format!(
             "Total rest  : {:02}:{:02}:{:02}",

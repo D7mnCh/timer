@@ -101,7 +101,6 @@ impl SwitchCell {
         if data.pause == false {
             cell_size = 60.0;
         } else {
-            // +8
             cell_size = 24.0;
         }
 

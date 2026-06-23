@@ -87,6 +87,9 @@ impl eframe::App for State {
                         ui.add_space(525.0);
                         self.intr_comp.pause_button.display(ui, &mut self.data);
                     });
+                    //update total work
+                    self.static_comp.work_cell.update_time(&mut self.data);
+                    self.static_comp.rest_cell.update_time(&mut self.data);
                 } else {
                     ui.horizontal(|ui| {
                         ui.add_space(540.0);
@@ -107,6 +110,7 @@ impl eframe::App for State {
                             ui.add_space(75.0);
                         });
                     });
+
                     if self.data.reset_totals == true {
                         self.data.reset_totals = false
                     }
