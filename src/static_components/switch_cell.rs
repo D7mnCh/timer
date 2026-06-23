@@ -6,13 +6,17 @@ pub struct SwitchCell {
     rest_secs: u64,
     mins: u64,
     hours: u64,
-    skip_pause_next: bool,
+    temp_work_secs: u64,
+    temp_rest_secs: u64,
 }
 
 impl SwitchCell {
-    fn get_new_user_input(&mut self, data: &mut Data) {
-        self.work_secs = data.work_secs;
-        self.rest_secs = data.rest_secs;
+    fn check_if_new_user_input(&mut self, data: &mut Data) {
+        if data.reset_with_new_user_input {
+            self.temp_work_secs = 0;
+            self.temp_rest_secs = 0;
+            data.reset_with_new_user_input = false;
+        }
     }
 
     fn update_time(&mut self, data: &mut Data) {
@@ -20,19 +24,30 @@ impl SwitchCell {
             Session::Work => {
                 self.mins = self.work_secs / 60;
                 self.hours = self.work_secs / (60 * 60);
+
                 if !data.pause {
-                    if self.work_secs > 0 {
-                        self.work_secs -= data.instant.elapsed().as_secs();
+                    self.work_secs = self.temp_work_secs;
+
+                    if self.work_secs != data.work_secs {
+                        self.work_secs += data.instant.elapsed().as_secs();
+                        // store temp to use it later, cuz when swithing to pause
+                        // i'll change self.work_secs
+                        self.temp_work_secs = self.work_secs;
                     } else {
                         data.pause = true;
+
                         //play sound
                         data.command = Command::PlaySound;
                         data.sound = Sound::MainRoundFinished;
                         data.command
                             .process_with(&mut data.child_process, &mut data.sound);
 
-                        data.reset_with_new_user_input = true;
+                        data.work_secs = 0;
                     }
+                } else {
+                    self.check_if_new_user_input(data);
+                    let remaining = data.work_secs - self.temp_work_secs;
+                    self.work_secs = remaining;
                 }
             }
 
@@ -40,8 +55,13 @@ impl SwitchCell {
                 self.mins = self.rest_secs / 60;
                 self.hours = self.rest_secs / (60 * 60);
                 if !data.pause {
-                    if self.rest_secs > 0 {
-                        self.rest_secs -= data.instant.elapsed().as_secs();
+                    self.rest_secs = self.temp_rest_secs;
+
+                    if self.rest_secs != data.rest_secs {
+                        self.rest_secs += data.instant.elapsed().as_secs();
+                        // store temp to use it later, cuz when swithing to pause
+                        // i'll change self.reset_secs
+                        self.temp_rest_secs = self.rest_secs;
                     } else {
                         data.pause = true;
 
@@ -51,19 +71,18 @@ impl SwitchCell {
                         data.command
                             .process_with(&mut data.child_process, &mut data.sound);
 
-                        data.reset_with_new_user_input = true;
+                        self.rest_secs = 0;
                     }
+                } else {
+                    self.check_if_new_user_input(data);
+                    let remaining = data.rest_secs - self.temp_rest_secs;
+                    self.rest_secs = remaining;
                 }
             }
         }
     }
 
     pub fn display(&mut self, ui: &mut egui::Ui, data: &mut Data) {
-        if data.reset_with_new_user_input == true {
-            self.get_new_user_input(data);
-            data.reset_with_new_user_input = false;
-        }
-
         self.update_time(data);
 
         let (color, secs) = match data.session {

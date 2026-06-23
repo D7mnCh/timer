@@ -149,6 +149,7 @@ impl eframe::App for State {
 /*
 
  TODO
+ - make lib.rs file
  - sometimes when i finshed the 45 mins it will not add 15 mins, i think this happen when i pause and repause
  - don't show totals, make remaining underneath the big timer so only three things will get displayed
  - after timer finished, reset the timer, if no it will be 0, and the user
@@ -167,6 +168,7 @@ impl eframe::App for State {
   rest session)
  - when the sound finished, make the buttom to disapear
  NOTE (bugs)
+ - i don't know who is changing the data, cuz you pass data struct as whole...
  - one functino have different functianlity
  - you made ui and logic in the same function -.-
  - no ui mod
