@@ -2,7 +2,6 @@ pub mod pause_button;
 pub mod reset_totals;
 pub mod rest_button;
 pub mod rest_secs_glider;
-pub mod turn_off_sound_button;
 pub mod work_button;
 pub mod work_secs_glider;
 
@@ -11,12 +10,10 @@ use crate::PauseButton;
 use crate::ResetTotals;
 use crate::RestButton;
 use crate::RestSecsGlider;
-use crate::TurnOffSoundButton;
 use crate::WorkButton;
 use crate::WorkSecsGlider;
 
 // crate begin from root here ? cause this is true ?
-use crate::Data;
 
 #[derive(Default)]
 pub struct IntrComp {
@@ -25,6 +22,5 @@ pub struct IntrComp {
     pub pause_button: PauseButton,
     pub work_secs_glider: WorkSecsGlider,
     pub rest_secs_glider: RestSecsGlider,
-    pub turn_off_sound_button: TurnOffSoundButton,
     pub reset_totals: ResetTotals,
 }

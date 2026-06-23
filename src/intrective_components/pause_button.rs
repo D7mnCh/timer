@@ -4,7 +4,8 @@ use crate::data::Data;
 pub struct PauseButton;
 impl PauseButton {
     pub fn display(&mut self, ui: &mut egui::Ui, data: &mut Data) {
-        if ui.button("Play/Pause").clicked() {
+        let text = if data.pause == false { "Pause" } else { "Play" };
+        if ui.add_sized([120., 20.], egui::Button::new(text)).clicked() {
             data.pause = !data.pause;
         }
     }

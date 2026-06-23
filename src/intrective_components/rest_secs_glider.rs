@@ -17,14 +17,19 @@ impl RestSecsGlider {
     pub fn display(&mut self, ui: &mut egui::Ui, data: &mut Data) {
         self.get_user_saved_input(data);
 
-        ui.add_sized(
-            [20., 20.],
+        let response = ui.add(
             egui::DragValue::new(&mut self.rest_mins)
                 .speed(0.1)
-                .prefix("Rest: ")
                 .range(1.0..=120.0),
         );
+        if response.dragged() {
+            data.session = Session::Rest;
+            data.reset_with_new_user_input = true;
+        }
+        if response.lost_focus() {
+            data.reset_with_new_user_input = true;
+        }
 
-        self.secs_converter(data); // -> 90
+        self.secs_converter(data);
     }
 }

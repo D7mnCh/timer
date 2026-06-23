@@ -1,22 +1,19 @@
 use crate::Data;
 use crate::Session;
 #[derive(Default)]
-// for this cell, if it work session it will increase by a little. if it rest sission, the secs
-// from ths struct will get converted to switch block
 pub struct RestCell {
     secs: u64,
     mins: u64,
     hours: u64,
 }
 impl RestCell {
-    fn update_time(&mut self, data: &mut Data) {
+    fn update_time(&mut self) {
         self.mins = self.secs / 60;
         self.hours = self.secs / (60 * 60);
     }
     pub fn display(&mut self, ui: &mut egui::Ui, data: &mut Data) {
-        self.update_time(data);
+        self.update_time();
         if data.reset_totals == true {
-            //data.reset_totals = false;
             self.secs = 0;
         }
         if data.pause == false {
@@ -32,7 +29,10 @@ impl RestCell {
             self.secs % 60
         );
         let degital_clock = degital_clock.as_str();
-        //ui.label(degital_clock);
-        ui.label(egui::RichText::new(degital_clock).color(egui::Color32::DARK_GREEN));
+        ui.label(
+            egui::RichText::new(degital_clock)
+                .color(egui::Color32::DARK_GREEN)
+                .size(15.0),
+        );
     }
 }
