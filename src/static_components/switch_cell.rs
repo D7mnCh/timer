@@ -99,9 +99,9 @@ impl SwitchCell {
 
         let mut cell_size;
         if data.pause == false {
-            cell_size = 60.0;
+            cell_size = 80.0;
         } else {
-            cell_size = 24.0;
+            cell_size = 28.0;
         }
 
         ui.label(

@@ -54,8 +54,8 @@ impl State {
                 session: Session::Work,
                 command: Command::None,
                 child_process: None,
-                rest_secs: 3,
-                work_secs: 3,
+                rest_secs: 900,
+                work_secs: 2700,
                 work_color: egui::Color32::RED,
                 rest_color: egui::Color32::GREEN,
             },
@@ -75,9 +75,9 @@ impl eframe::App for State {
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.vertical(|ui| {
                 if !self.data.pause {
-                    ui.add_space(40.0);
+                    ui.add_space(20.0);
                     ui.horizontal(|ui| {
-                        ui.add_space(460.0);
+                        ui.add_space(440.0);
                         self.static_comp.switch_cell.display(ui, &mut self.data);
                     });
 
@@ -92,11 +92,9 @@ impl eframe::App for State {
                     self.static_comp.rest_cell.update_time(&mut self.data);
                 } else {
                     ui.horizontal(|ui| {
-                        ui.add_space(540.0);
+                        ui.add_space(543.0);
                         self.static_comp.switch_cell.display(ui, &mut self.data);
                     });
-
-                    ui.add_space(7.0);
 
                     ui.horizontal(|ui| {
                         ui.add_space(435.0);
