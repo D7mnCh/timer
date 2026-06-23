@@ -1,7 +1,6 @@
 use crate::data::*;
 
 #[derive(Default, Debug)]
-//NOTE for iniailization, use default trait
 pub struct SwitchCell {
     work_secs: u64,
     rest_secs: u64,
@@ -67,13 +66,13 @@ impl SwitchCell {
 
         self.update_time(data);
 
-        let (color, which_session, secs) = match data.session {
-            Session::Work => (data.work_color, "Work", self.work_secs),
-            Session::Rest => (data.rest_color, "Rest", self.rest_secs),
+        let (color, secs) = match data.session {
+            Session::Work => (data.work_color, self.work_secs),
+            Session::Rest => (data.rest_color, self.rest_secs),
         };
+
         let degital_clock = format!(
-            "{} session: {:02}:{:02}:{:02}",
-            which_session,
+            "{:02}:{:02}:{:02}",
             self.hours % 24,
             self.mins % 60,
             secs % 60,
@@ -83,7 +82,8 @@ impl SwitchCell {
         if data.pause == false {
             cell_size = 60.0;
         } else {
-            cell_size = 16.0;
+            // +8
+            cell_size = 24.0;
         }
 
         ui.label(

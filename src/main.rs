@@ -74,29 +74,26 @@ impl eframe::App for State {
 
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.vertical(|ui| {
-                if self.data.pause == false {
+                if !self.data.pause {
                     ui.add_space(40.0);
                     ui.horizontal(|ui| {
-                        ui.add_space(280.0);
+                        ui.add_space(460.0);
                         self.static_comp.switch_cell.display(ui, &mut self.data);
                     });
 
                     ui.add_space(25.0);
 
                     ui.horizontal(|ui| {
-                        self.static_comp.rest_cell.display(ui, &mut self.data);
-                        ui.add_space(370.0);
+                        ui.add_space(525.0);
                         self.intr_comp.pause_button.display(ui, &mut self.data);
-                        ui.add_space(355.0);
-                        self.static_comp.work_cell.display(ui, &mut self.data);
                     });
                 } else {
                     ui.horizontal(|ui| {
-                        ui.add_space(515.0);
+                        ui.add_space(540.0);
                         self.static_comp.switch_cell.display(ui, &mut self.data);
                     });
 
-                    ui.add_space(10.0);
+                    ui.add_space(7.0);
 
                     ui.horizontal(|ui| {
                         ui.add_space(435.0);
@@ -114,7 +111,6 @@ impl eframe::App for State {
                         self.data.reset_totals = false
                     }
 
-                    ui.add_space(5.0);
                     // NOTE intrective_components starts to show here !
 
                     ui.horizontal(|ui| {
@@ -171,6 +167,9 @@ impl eframe::App for State {
   rest session)
  - when the sound finished, make the buttom to disapear
  NOTE (bugs)
+ - one functino have different functianlity
+ - you made ui and logic in the same function -.-
+ - no ui mod
  - sometimes the timer will freeze for one second or even
  - the program you are building is for you after all, the features you will add
  is based on your needs
