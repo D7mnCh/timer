@@ -12,7 +12,6 @@ pub enum Command {
 #[derive(Debug, PartialEq)]
 pub enum Sound {
     MainRoundFinished,
-    BonusRoundFinished,
     Rest,
 }
 #[derive(Debug)]
@@ -34,18 +33,17 @@ pub struct Data {
 
 impl Command {
     fn play_sound(child_process: &mut Option<std::process::Child>, sound: &mut Sound) {
-        let path = std::env::current_dir()
-            .expect("couldn't find sounds directory on the current directory")
-            .join("sounds");
+        //let path = std::env::current_dir()
+        //    .expect("couldn't find sounds directory on the current directory")
+        //    .join("sounds");
         //std::process::Command::new("dunstify")
         //    .arg(&path)
         //    .spawn()
         //    .unwrap();
-        //let path = "/usr/local/bin/Timer/sounds";
+        let path = "/usr/local/bin/Timer/sounds";
         // which sound to play
         let sound: &str = match sound {
             Sound::MainRoundFinished => "main_round.wav",
-            Sound::BonusRoundFinished => "bonus_round.wav",
             Sound::Rest => "end_rest.wav",
         };
 

@@ -151,6 +151,7 @@ impl eframe::App for State {
 /*
 
  TODO
+ - make tiny remaining timer when not pause
  - make lib.rs file
  - sometimes when i finshed the 45 mins it will not add 15 mins, i think this happen when i pause and repause
  - don't show totals, make remaining underneath the big timer so only three things will get displayed

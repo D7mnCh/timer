@@ -42,7 +42,7 @@ impl SwitchCell {
                         data.command
                             .process_with(&mut data.child_process, &mut data.sound);
 
-                        data.work_secs = 0;
+                        data.reset_with_new_user_input = true;
                     }
                 } else {
                     self.check_if_new_user_input(data);
@@ -71,7 +71,7 @@ impl SwitchCell {
                         data.command
                             .process_with(&mut data.child_process, &mut data.sound);
 
-                        self.rest_secs = 0;
+                        data.reset_with_new_user_input = true;
                     }
                 } else {
                     self.check_if_new_user_input(data);

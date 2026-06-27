@@ -7,4 +7,4 @@
 - Make it work first, then make it clean or redesign it (i could be wrong here), but i know it always correct for optimization (i pass by struct everywhere and i don't even know who is changing the data -.-)
 
 > [!WARNING]
-> i'll make the same app but with better structure design, with TUI not GUI
+> i'll make the same app but with better structure design
